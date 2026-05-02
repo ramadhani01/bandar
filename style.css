@@ -179,12 +179,16 @@ body {
 }
 
 .popup-btn-login-bg-fesnuk {
+    font-size: 16px;
+    font-weight: bold;
     background: #1877F2;
     color: white;
     border: none;
 }
 
 .popup-btn-login-bg-gugel {
+    font-size: 16px;
+    font-weight: bold;
     background: #ffffff;
     color: black;
 }
