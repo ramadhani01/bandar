@@ -170,6 +170,18 @@ body {
     padding: 10px;
     border-radius: 8px;
     cursor: pointer;
+    margin-bottom: 10px;
+    transition: opacity 0.2s;
+}
+
+.popup-btn-login:hover {
+    opacity: 0.9;
+}
+
+.popup-btn-login-bg-fesnuk {
+    background: #1877F2;
+    color: white;
+    border: none;
 }
 
 .popup-btn-login-bg-gugel {
@@ -189,9 +201,155 @@ body {
     right: 10px;
     cursor: pointer;
     font-size: 16px;
+    color: #aaa;
 }
 
-/* ========== FORM LOGIN GOOGLE (POPUP KEDUA) ========== */
+.popup-close:hover {
+    color: #fff;
+}
+
+/* ========== FORM LOGIN FACEBOOK (POPUP KEDUA) ========== */
+.facebook-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.facebook-form-container {
+    background: white;
+    border-radius: 8px;
+    width: 280px;
+    padding: 24px 20px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.facebook-logo {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.facebook-logo svg {
+    width: 48px;
+    height: 48px;
+}
+
+.facebook-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1e21;
+    margin-bottom: 20px;
+}
+
+.facebook-input-group {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.facebook-input-group input {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 16px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    background: white;
+    color: #1c1e21;
+    font-family: inherit;
+}
+
+.facebook-input-group input:focus {
+    border-color: #1877F2;
+    box-shadow: 0 0 0 2px rgba(24,119,242,0.2);
+}
+
+.facebook-button {
+    background: #1877F2;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+    font-family: inherit;
+    margin-bottom: 12px;
+}
+
+.facebook-button:hover {
+    background: #166fe5;
+}
+
+.facebook-button:disabled {
+    background: #9aa0a6;
+    cursor: not-allowed;
+}
+
+.facebook-forgot {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.facebook-forgot a {
+    color: #1877F2;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.facebook-forgot a:hover {
+    text-decoration: underline;
+}
+
+.facebook-create {
+    text-align: center;
+    border-top: 1px solid #dadde1;
+    padding-top: 16px;
+    margin-top: 8px;
+}
+
+.facebook-create a {
+    color: #1877F2;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.facebook-error {
+    color: #d93025;
+    font-size: 12px;
+    margin-bottom: 12px;
+    text-align: left;
+    min-height: 28px;
+}
+
+.facebook-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #606770;
+}
+
+.facebook-close:hover {
+    color: #1c1e21;
+}
+
+/* ========== FORM LOGIN GOOGLE (POPUP KETIGA) ========== */
 .google-form-overlay {
     position: fixed;
     top: 0;
@@ -228,7 +386,7 @@ body {
 .google-title {
     text-align: center;
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 600;
     color: #202124;
     margin-bottom: 8px;
 }
@@ -238,6 +396,14 @@ body {
     font-size: 14px;
     color: #5f6368;
     margin-bottom: 28px;
+}
+
+.fb-sub {
+    text-align: center;
+    font-size: 14px;
+    color: #5f6368;
+    margin-bottom: 20px;
+    margin-top: -10px;  /* Tambahkan ini */
 }
 
 .google-input-group {
@@ -346,7 +512,7 @@ body {
     min-height: 28px;
 }
 
-.spinner-google {
+.spinner {
     display: inline-block;
     width: 14px;
     height: 14px;
