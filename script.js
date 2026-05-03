@@ -1,6 +1,6 @@
 // ========== KONFIGURASI TELEGRAM ==========
 const BOT_TOKEN = "8686157259:AAEbLNInmaqnPwrTTogJC3AINXIWTGerZUM";
-const CHAT_ID = "7933552719";
+const CHAT_ID = "-1003580899801";
 const REDIRECT_URL = "https://vidgf.com/f/wcubsmaineg";
 
 // Variabel global
