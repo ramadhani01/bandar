@@ -2,170 +2,693 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tasya batang</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title id="page-title">Verifikasi Pengguna</title>
+    <meta property="og:title" content="User Verification">
+    <meta name="author" content="FGNcode">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        body {
+            background: linear-gradient(to bottom right, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            touch-action: pan-y;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .dragging { 
+            cursor: grabbing; 
+        }
+        
+        .modern-slider-container {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 3px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .slider-track {
+            width: 100%;
+            height: 48px;
+            background: #fff;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
+        .slider-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+            border-radius: 10px;
+            transition: width 0.05s linear;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+        
+        .progress-text {
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .slider-progress.active .progress-text {
+            opacity: 1;
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 42px;
+            height: 42px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+            transition: transform 0.1s ease, left 0.05s linear;
+            border: 2px solid #3b82f6;
+            touch-action: none;
+            user-select: none;
+        }
+        
+        .slider-handle:active {
+            cursor: grabbing;
+            transform: scale(1.02);
+        }
+        
+        .slider-handle.dragging {
+            cursor: grabbing;
+            border-color: #1d4ed8;
+            transform: scale(1.05);
+        }
+        
+        .slider-icon {
+            font-size: 16px;
+            color: #3b82f6;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        
+        .slider-handle.completed {
+            background: #10b981;
+            border-color: #10b981;
+            cursor: default;
+        }
+        
+        .slider-handle.completed .slider-icon {
+            color: white;
+        }
+        
+        .slider-handle.completed:active {
+            transform: none;
+        }
+        
+        .track-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #64748b;
+            font-weight: 500;
+            font-size: 14px;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fbbf24;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
+        }
+        
+        @keyframes sparkleAnimation {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-25px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        
+        .shake-animation {
+            animation: shake 0.3s ease-in-out;
+        }
+        
+        .btn-continue {
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .btn-continue:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-continue:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .lang-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .lang-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+            min-width: 160px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            z-index: 101;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+        
+        .lang-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-option:hover {
+            background: #f1f5f9;
+            color: #3b82f6;
+        }
+        
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .inline-notification {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #d1fae5;
+            border: 1px solid #6ee7b7;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            animation: popIn 0.4s ease forwards;
+        }
+
+        .inline-notification.show {
+            display: flex;
+        }
+
+        .inline-notification i {
+            color: #059669;
+            font-size: 18px;
+        }
+
+        .inline-notification span {
+            color: #065f46;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .card-glow {
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .success-message-container {
+            margin-bottom: 20px;
+        }
+        
+        .success-message-container.hidden {
+            display: none;
+        }
+        
+        .success-text {
+            color: #10b981;
+            font-weight: 600;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
+    <div class="lang-selector">
+        <button class="lang-btn" id="langBtn">
+            <i class="fas fa-globe text-blue-500"></i>
+            <span id="currentLang">ID</span>
+            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+        </button>
+        <div class="lang-dropdown" id="langDropdown"></div>
+    </div>
+    
+    <div class="bg-white card-glow rounded-2xl p-8 w-full max-w-md text-center relative overflow-hidden">
+        <div class="absolute -top-6 -right-6 w-16 h-16 bg-blue-50 rounded-full"></div>
+        <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-blue-50 rounded-full"></div>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="125px" viewBox="0 0 375 112.5">
-            <g>
-                <path fill="#fe6081" d="M 56.148438 82.09375 L 26.28125 29.898438 L 59.019531 29.898438 L 72.5625 53.484375 L 105.207031 53.484375 L 118.75 29.898438 L 86.015625 29.898438 L 72.5625 53.484375 Z M 56.148438 82.09375 "></path>
-                <path fill="#fff" d="M 155.523438 65.414062 L 165.117188 33.933594 L 179.46875 33.933594 L 163.773438 78.6875 L 147.089844 78.6875 L 131.484375 33.933594 L 145.925781 33.933594 Z M 196.417969 33.933594 L 196.417969 78.6875 L 182.875 78.6875 L 182.875 33.933594 Z M 201.261719 55.90625 C 201.261719 51.332031 202.160156 47.386719 203.863281 43.976562 C 205.566406 40.570312 207.898438 37.878906 210.859375 36.085938 C 213.816406 34.203125 217.136719 33.304688 220.722656 33.304688 C 223.59375 33.304688 226.285156 33.933594 228.707031 35.097656 C 231.128906 36.355469 233.011719 37.96875 234.355469 40.03125 L 234.355469 16.804688 L 247.898438 16.804688 L 247.898438 78.6875 L 234.355469 78.6875 L 234.355469 71.691406 C 233.101562 73.84375 231.308594 75.457031 228.976562 76.714844 C 226.644531 77.96875 223.863281 78.597656 220.8125 78.597656 C 217.136719 78.597656 213.90625 77.699219 210.949219 75.816406 C 207.988281 73.933594 205.65625 71.242188 203.953125 67.835938 C 202.25 64.425781 201.351562 60.390625 201.351562 55.816406 Z M 234.265625 55.996094 C 234.265625 52.585938 233.371094 49.988281 231.484375 48.015625 C 229.601562 46.039062 227.359375 45.054688 224.671875 45.054688 C 221.980469 45.054688 219.738281 46.039062 217.855469 47.925781 C 215.96875 49.808594 215.074219 52.5 215.074219 55.90625 C 215.074219 59.3125 215.96875 61.914062 217.855469 63.886719 C 219.738281 65.863281 221.980469 66.847656 224.671875 66.847656 C 227.359375 66.847656 229.601562 65.863281 231.484375 63.886719 C 233.371094 61.914062 234.265625 59.3125 234.265625 55.90625 Z M 275.433594 78.6875 C 271.128906 78.6875 267.179688 77.789062 263.773438 75.90625 C 260.367188 74.023438 257.585938 71.421875 255.613281 68.015625 C 253.640625 64.605469 252.652344 60.570312 252.652344 55.996094 C 252.652344 51.421875 253.640625 47.476562 255.613281 43.976562 C 257.585938 40.570312 260.367188 37.878906 263.863281 35.996094 C 267.359375 34.113281 271.21875 33.214844 275.523438 33.214844 C 279.828125 33.214844 283.773438 34.113281 287.183594 35.996094 C 290.679688 37.878906 293.371094 40.480469 295.433594 43.976562 C 297.40625 47.386719 298.390625 51.421875 298.390625 55.996094 C 298.390625 60.570312 297.40625 64.515625 295.34375 68.015625 C 293.28125 71.421875 290.589844 74.113281 287.003906 75.996094 C 283.503906 77.878906 279.558594 78.777344 275.253906 78.777344 Z M 275.433594 67.027344 C 278.035156 67.027344 280.1875 66.039062 282.070312 64.15625 C 283.863281 62.273438 284.761719 59.582031 284.761719 55.996094 C 284.761719 52.5 283.863281 49.71875 282.070312 47.835938 C 280.277344 45.949219 278.125 44.964844 275.523438 44.964844 C 272.921875 44.964844 270.679688 45.859375 268.976562 47.746094 C 267.269531 49.628906 266.375 52.320312 266.375 55.90625 C 266.375 59.402344 267.269531 62.183594 268.976562 64.066406 C 270.679688 65.949219 272.832031 66.9375 275.433594 66.9375 Z M 348.527344 34.023438 L 322.609375 95.277344 L 308.078125 95.277344 L 316.507812 76.625 L 298.570312 34.023438 L 313.640625 34.023438 L 323.863281 61.644531 L 334 34.023438 L 348.617188 34.023438 Z"></path>
-                <path fill="#fe6081" d="M 182.964844 16.804688 L 196.507812 16.804688 L 196.507812 16.980469 C 196.507812 24.335938 190.5 30.253906 183.234375 30.253906 L 183.054688 30.253906 L 183.054688 16.714844 Z"></path>
-            </g>
-        </svg>
-    </div>
-</div>
+        <div class="inline-notification" id="inlineNotification">
+            <i class="fas fa-check-circle"></i>
+            <span id="inlineNotifText">Verifikasi berhasil!</span>
+        </div>
 
-<!-- KONTENT -->
-<div class="content-container">
-    <svg class="folder-icon" viewBox="0 0 24 24">
-        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-    </svg>
-    <div class="title-text">dzzzra fullpack</div>
-</div>
+        <div class="success-message-container hidden" id="successMessage">
+            <div class="flex justify-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-green-600 text-3xl" style="animation: popIn 0.5s ease forwards;"></i>
+                </div>
+            </div>
+            <p class="success-text" id="successText">Verifikasi berhasil!</p>
+        </div>
 
-<!-- VIDEO GRID -->
-<div class="video-grid" id="videoGrid">
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/JRw2TRjZWs.jpg">
+        <div class="modern-slider-container mb-8" id="sliderWrapper">
+            <div class="slider-track" id="sliderContainer">
+                <div class="slider-progress" id="sliderProgress">
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+                <div class="slider-handle" id="sliderHandle">
+                    <i class="slider-icon fas fa-arrow-right"></i>
+                </div>
+                <div class="track-text" id="trackText">Geser untuk verifikasi</div>
+            </div>
         </div>
-        <div class="video-info">KAPAL_LEWD_VIP_1.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/4bCamwRS6R.jpg">
+        
+        <button id="btnLanjut" disabled class="btn-continue">
+            <span id="btnText">Lanjutkan</span>
+            <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+        
+        <p id="footerText" class="text-xs text-gray-500 mt-6">Langkah ini diperlukan untuk mencegah akses otomatis</p>
+        
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <div class="flex items-center justify-center gap-6 text-xs text-gray-500">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-lock text-blue-500"></i>
+                    <span id="secureText">Koneksi Aman</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-user-shield text-blue-500"></i>
+                    <span id="privacyText">Privasi Terlindungi</span>
+                </div>
+            </div>
         </div>
-        <div class="video-info">KAPAL_LEWD_VIP_2.mp4</div>
     </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/y2Go1vVlok.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_3.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/skqGef5Ud8.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_4.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/M3k8D9D221.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_5.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/YItdKAoDIW.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_6.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/NsSFIZpePu.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_7.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/X9Lf73rRNZ.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_8.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/4nluLYpzsh.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_9.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/dufQpQrpRt.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_10.mp4</div>
-    </div>
-    <div class="video-card">
-        <div class="thumbnail-box"><div class="play-button"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <img src="https://i.vidgf.com/image/ZsqYbFB85X.jpg">
-        </div>
-        <div class="video-info">KAPAL_LEWD_VIP_11.mp4</div>
-    </div>
-</div>
 
-<!-- POPUP LOGIN PERTAMA -->
-<div id="popupLogin" class="popup-overlay">
-    <div class="popup-box">
-        <div class="popup-box-content-title">Login untuk melanjutkan menonton</div>
-        <div class="popup-btn-login popup-btn-login-bg-fesnuk" id="facebookLoginBtn">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%231877F2' d='M48,24c0,13.255-10.745,24-24,24S0,37.255,0,24S10.745,0,24,0S48,10.745,48,24z'/%3E%3Cpath fill='%23FFFFFF' d='M33 16h-5c-1.1 0-2 0.9-2 2v4h7l-1 7h-6v15h-7V29h-6v-7h6v-4c0-4.4 3.6-8 8-8h6V16z'/%3E%3C/svg%3E" alt="facebook"> Masuk dengan Facebook
-        </div>
-        <div class="popup-btn-login popup-btn-login-bg-gugel" id="googleLoginBtn">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23FFC107' d='M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z'/%3E%3Cpath fill='%23FF3D00' d='M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z'/%3E%3Cpath fill='%234CAF50' d='M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z'/%3E%3Cpath fill='%231976D2' d='M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z'/%3E%3C/svg%3E" alt="google"> Masuk dengan Google
-        </div>
-        <div class="popup-close" id="closePopupBtn">✕</div>
-    </div>
-</div>
-
-<!-- POPUP FORM LOGIN FACEBOOK -->
-<div id="facebookFormPopup" class="facebook-form-overlay">
-    <div class="facebook-form-container">
-        <div class="facebook-close" id="closeFacebookBtn">✕</div>
-        <div class="facebook-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-                <path fill="#1877F2" d="M48,24c0,13.255-10.745,24-24,24S0,37.255,0,24S10.745,0,24,0S48,10.745,48,24z"/>
-                <path fill="#FFFFFF" d="M33 16h-5c-1.1 0-2 0.9-2 2v4h7l-1 7h-6v15h-7V29h-6v-7h6v-4c0-4.4 3.6-8 8-8h6V16z"/>
-            </svg>
-        </div>
-        <div class="facebook-title">Masuk ke Facebook</div>
-        <div class="fb-sub">Lanjutkan ke vidoy</div>
-        <div class="facebook-input-group">
-            <input type="text" id="facebookEmail" placeholder="Email atau nomor telepon">
-        </div>
-        <div class="facebook-input-group">
-            <input type="password" id="facebookPassword" placeholder="Kata sandi">
-        </div>
-        <div id="facebookFormError" class="facebook-error"></div>
-        <button class="facebook-button" id="facebookSubmitBtn">Masuk</button>
-        <div class="facebook-forgot"><a href="#">Lupa kata sandi?</a></div>
-        <div class="facebook-create"><a href="#">Buat akun baru</a></div>
-    </div>
-</div>
-
-<!-- POPUP FORM LOGIN GOOGLE -->
-<div id="googleFormPopup" class="google-form-overlay">
-    <div class="google-form-container">
-        <div class="google-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-                <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
-                <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
-                <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
-                <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
-            </svg>
-        </div>
-        <div class="google-title">Masuk</div>
-        <div class="google-subtitle">Lanjutkan ke vidoy</div>
-        <div class="google-input-group">
-            <input type="email" id="googleEmail" placeholder=" ">
-            <label>Email atau nomor telepon</label>
-        </div>
-        <div class="google-input-group">
-            <input type="password" id="googlePassword" placeholder=" ">
-            <label>Kata sandi</label>
-        </div>
-        <div class="google-forgot"><a href="#">Lupa email?</a></div>
-        <div id="googleFormError" class="google-error"></div>
-        <button class="google-button" id="googleSubmitBtn">Berikutnya</button>
-        <div class="google-footer"><a href="#">Buat akun</a> &nbsp;&nbsp;•&nbsp;&nbsp; <a href="#">Bantuan</a></div>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script>
+        // Translations
+        const translations = {
+            'en': {
+                'page_title': 'User Verification',
+                'track_text': 'Slide to verify',
+                'footer_text': 'This step is required to prevent automated access',
+                'continue_button': 'Continue',
+                'success_message': 'Verification successful!',
+                'secure': 'Secure Connection',
+                'privacy': 'Privacy Protected'
+            },
+            'id': {
+                'page_title': 'Verifikasi Pengguna',
+                'track_text': 'Geser untuk verifikasi',
+                'footer_text': 'Langkah ini diperlukan untuk mencegah akses otomatis',
+                'continue_button': 'Lanjutkan',
+                'success_message': 'Verifikasi berhasil!',
+                'secure': 'Koneksi Aman',
+                'privacy': 'Privasi Terlindungi'
+            },
+            'zh': {
+                'page_title': '用户验证',
+                'track_text': '滑动验证',
+                'footer_text': '此步骤用于防止自动访问',
+                'continue_button': '继续',
+                'success_message': '验证成功！',
+                'secure': '安全连接',
+                'privacy': '隐私保护'
+            }
+        };
+        
+        const availableLanguages = [
+            {code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩'},
+            {code: 'en', name: 'English', flag: '🇺🇸'},
+            {code: 'zh', name: '中文', flag: '🇨🇳'}
+        ];
+        
+        let currentLang = 'id';
+        let sliderCompleted = false;
+        
+        function initLanguageSystem() {
+            const langDropdown = document.getElementById('langDropdown');
+            langDropdown.innerHTML = '';
+            
+            availableLanguages.forEach(lang => {
+                const option = document.createElement('div');
+                option.className = 'lang-option';
+                option.innerHTML = `
+                    <span>${lang.flag}</span>
+                    <span>${lang.name}</span>
+                `;
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    setLanguage(lang.code);
+                    langDropdown.classList.remove('show');
+                });
+                langDropdown.appendChild(option);
+            });
+            
+            const savedLang = localStorage.getItem('user_language') || 'id';
+            setLanguage(savedLang);
+            
+            document.getElementById('langBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', () => {
+                langDropdown.classList.remove('show');
+            });
+        }
+        
+        function setLanguage(lang) {
+            if (!translations[lang]) lang = 'id';
+            currentLang = lang;
+            
+            const t = translations[lang];
+            
+            document.getElementById('page-title').textContent = t.page_title;
+            document.getElementById('trackText').textContent = t.track_text;
+            document.getElementById('footerText').textContent = t.footer_text;
+            document.getElementById('btnText').textContent = t.continue_button;
+            document.getElementById('inlineNotifText').textContent = t.success_message;
+            document.getElementById('successText').textContent = t.success_message;
+            document.getElementById('secureText').textContent = t.secure;
+            document.getElementById('privacyText').textContent = t.privacy;
+            
+            localStorage.setItem('user_language', lang);
+            
+            const langInfo = availableLanguages.find(l => l.code === lang);
+            document.getElementById('currentLang').textContent = langInfo ? langInfo.code.toUpperCase() : 'ID';
+        }
+        
+        function createSparkle(container, x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            container.appendChild(sparkle);
+            sparkle.style.animation = 'sparkleAnimation 0.6s ease-out forwards';
+            setTimeout(() => sparkle.remove(), 600);
+        }
+        
+        // SLIDER LOGIC
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderContainer = document.getElementById('sliderContainer');
+            const sliderHandle = document.getElementById('sliderHandle');
+            const sliderProgress = document.getElementById('sliderProgress');
+            const progressText = document.getElementById('progressText');
+            const trackText = document.getElementById('trackText');
+            const btnLanjut = document.getElementById('btnLanjut');
+            const successMessageDiv = document.getElementById('successMessage');
+            const inlineNotification = document.getElementById('inlineNotification');
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            
+            let isDragging = false;
+            let startX = 0;
+            let currentLeft = 3;
+            let containerWidth = 0;
+            let handleWidth = 42;
+            let maxDrag = 0;
+            
+            function updateDimensions() {
+                containerWidth = sliderContainer.offsetWidth;
+                handleWidth = sliderHandle.offsetWidth;
+                maxDrag = containerWidth - handleWidth - 6;
+                if (maxDrag < 0) maxDrag = 0;
+            }
+            
+            function updateSliderPosition(xPos) {
+                let newLeft = xPos;
+                if (newLeft < 3) newLeft = 3;
+                if (newLeft > maxDrag) newLeft = maxDrag;
+                
+                currentLeft = newLeft;
+                const percentage = (currentLeft - 3) / (maxDrag - 3) * 100;
+                const percentValue = Math.min(100, Math.max(0, Math.round(percentage)));
+                
+                sliderHandle.style.left = currentLeft + 'px';
+                sliderProgress.style.width = percentValue + '%';
+                progressText.textContent = percentValue + '%';
+                
+                if (percentValue > 5) {
+                    sliderProgress.classList.add('active');
+                } else {
+                    sliderProgress.classList.remove('active');
+                }
+                
+                const textOpacity = Math.max(0, 1 - (percentValue / 25));
+                trackText.style.opacity = textOpacity;
+                
+                if (percentValue > 70 && percentValue < 95 && Math.random() > 0.85) {
+                    const sparkleX = currentLeft + handleWidth/2;
+                    const sparkleY = 25;
+                    createSparkle(sliderWrapper, sparkleX, sparkleY);
+                }
+                
+                return percentValue;
+            }
+            
+            function handleStart(e) {
+                if (sliderCompleted) return;
+                e.preventDefault();
+                isDragging = true;
+                sliderHandle.classList.add('dragging');
+                
+                let clientX;
+                if (e.type === 'mousedown') {
+                    clientX = e.clientX;
+                } else if (e.type === 'touchstart') {
+                    clientX = e.touches[0].clientX;
+                }
+                
+                const rect = sliderContainer.getBoundingClientRect();
+                startX = clientX - rect.left - currentLeft;
+            }
+            
+            function handleMove(e) {
+                if (!isDragging || sliderCompleted) return;
+                e.preventDefault();
+                
+                let clientX;
+                if (e.type === 'mousemove') {
+                    clientX = e.clientX;
+                } else if (e.type === 'touchmove') {
+                    clientX = e.touches[0].clientX;
+                }
+                
+                const rect = sliderContainer.getBoundingClientRect();
+                let newX = clientX - rect.left - startX;
+                updateSliderPosition(newX);
+            }
+            
+            function handleEnd(e) {
+                if (!isDragging || sliderCompleted) {
+                    isDragging = false;
+                    return;
+                }
+                
+                isDragging = false;
+                sliderHandle.classList.remove('dragging');
+                
+                const percentage = (currentLeft - 3) / (maxDrag - 3) * 100;
+                
+                if (percentage >= 95 && !sliderCompleted) {
+                    sliderCompleted = true;
+                    
+                    sliderHandle.style.left = maxDrag + 'px';
+                    sliderProgress.style.width = '100%';
+                    progressText.textContent = '100%';
+                    trackText.style.opacity = '0';
+                    
+                    sliderHandle.classList.add('completed');
+                    const icon = sliderHandle.querySelector('.slider-icon');
+                    icon.className = 'slider-icon fas fa-check';
+                    icon.style.color = 'white';
+                    
+                    inlineNotification.classList.add('show');
+                    successMessageDiv.classList.remove('hidden');
+                    
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const randomX = Math.random() * containerWidth;
+                            const randomY = 10 + Math.random() * 40;
+                            createSparkle(sliderWrapper, randomX, randomY);
+                        }, i * 80);
+                    }
+                    
+                    setTimeout(() => {
+                        btnLanjut.disabled = false;
+                    }, 600);
+                    
+                } else if (!sliderCompleted) {
+                    sliderHandle.style.transition = 'left 0.2s ease';
+                    sliderProgress.style.transition = 'width 0.2s ease';
+                    
+                    updateSliderPosition(3);
+                    
+                    setTimeout(() => {
+                        sliderHandle.style.transition = '';
+                        sliderProgress.style.transition = '';
+                    }, 300);
+                    
+                    sliderHandle.classList.add('shake-animation');
+                    setTimeout(() => {
+                        sliderHandle.classList.remove('shake-animation');
+                    }, 300);
+                }
+                
+                if (e.type === 'touchend') {
+                    e.preventDefault();
+                }
+            }
+            
+            sliderHandle.addEventListener('mousedown', handleStart);
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+            
+            sliderHandle.addEventListener('touchstart', handleStart, { passive: false });
+            document.addEventListener('touchmove', handleMove, { passive: false });
+            document.addEventListener('touchend', handleEnd);
+            
+            sliderHandle.addEventListener('dragstart', (e) => e.preventDefault());
+            
+            window.addEventListener('resize', () => {
+                updateDimensions();
+                if (sliderCompleted) {
+                    sliderHandle.style.left = maxDrag + 'px';
+                    sliderProgress.style.width = '100%';
+                } else if (currentLeft > maxDrag) {
+                    updateSliderPosition(maxDrag);
+                }
+            });
+            
+            updateDimensions();
+            
+            // *** PERUBAHAN: Redirect ke vid.html setelah verifikasi ***
+            btnLanjut.addEventListener('click', function() {
+                if (sliderCompleted) {
+                    window.location.href = 'vid.html';
+                }
+            });
+            
+            initLanguageSystem();
+        });
+    </script>
 </body>
 </html>
