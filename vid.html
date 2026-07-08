@@ -26,7 +26,7 @@
         .breadcrumb span { color: #f59b00; }
         .breadcrumb i { margin: 0 8px; font-size: 12px; }
 
-        /* -- BANNER CARD (seperti video card tapi besar di atas) -- */
+        /* -- BANNER CARD -- */
         .banner-card {
             max-width: 1200px;
             margin: 0 auto 20px;
@@ -38,6 +38,12 @@
             transition: all 0.3s;
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .banner-card:hover { border-color: #f59b00; box-shadow: 0 8px 30px rgba(245, 155, 0, 0.1); }
         .banner-card .banner-thumb {
@@ -55,6 +61,11 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .banner-card .banner-thumb img.loaded {
+            opacity: 1;
         }
         .banner-card .banner-thumb .placeholder {
             width: 100%;
@@ -193,14 +204,70 @@
         .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* -- VIDEO GRID -- */
-        .video-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
-        .video-card { background: #141414; border-radius: 10px; overflow: hidden; cursor: pointer; transition: all 0.3s; border: 1px solid #1f1f1f; text-decoration: none; display: block; color: white; position: relative; }
+        .video-grid { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 18px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .video-grid.loaded {
+            opacity: 1;
+        }
+        .video-card { 
+            background: #141414; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border: 1px solid #1f1f1f; 
+            text-decoration: none; 
+            display: block; 
+            color: white; 
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .video-card:nth-child(1) { animation-delay: 0.05s; }
+        .video-card:nth-child(2) { animation-delay: 0.10s; }
+        .video-card:nth-child(3) { animation-delay: 0.15s; }
+        .video-card:nth-child(4) { animation-delay: 0.20s; }
+        .video-card:nth-child(5) { animation-delay: 0.25s; }
+        .video-card:nth-child(6) { animation-delay: 0.30s; }
+        .video-card:nth-child(7) { animation-delay: 0.35s; }
+        .video-card:nth-child(8) { animation-delay: 0.40s; }
+        .video-card:nth-child(9) { animation-delay: 0.45s; }
+        .video-card:nth-child(10) { animation-delay: 0.50s; }
+        .video-card:nth-child(11) { animation-delay: 0.55s; }
+        .video-card:nth-child(12) { animation-delay: 0.60s; }
+        .video-card:nth-child(13) { animation-delay: 0.65s; }
+        .video-card:nth-child(14) { animation-delay: 0.70s; }
+        .video-card:nth-child(15) { animation-delay: 0.75s; }
+
         .video-card:hover { transform: translateY(-5px); border-color: #f59b00; box-shadow: 0 8px 25px rgba(245, 155, 0, 0.12); }
         .video-card .delete-btn { position: absolute; top: 8px; right: 8px; background: rgba(220, 38, 38, 0.9); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 12px; z-index: 10; transition: all 0.3s; display: none; align-items: center; justify-content: center; }
         .video-card .delete-btn:hover { transform: scale(1.1); background: #ef4444; }
         .admin-panel.visible ~ .video-grid .video-card .delete-btn,
         .show-delete .video-card .delete-btn { display: flex; }
-        .folder-card { background: #141414; border-radius: 10px; overflow: hidden; cursor: pointer; transition: all 0.3s; border: 2px solid #2a2a2a; text-decoration: none; display: block; color: white; position: relative; }
+        .folder-card { 
+            background: #141414; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border: 2px solid #2a2a2a; 
+            text-decoration: none; 
+            display: block; 
+            color: white; 
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .folder-card:nth-child(1) { animation-delay: 0.05s; }
+        .folder-card:nth-child(2) { animation-delay: 0.10s; }
+        .folder-card:nth-child(3) { animation-delay: 0.15s; }
         .folder-card:hover { transform: translateY(-5px) scale(1.02); border-color: #f59b00; box-shadow: 0 8px 30px rgba(245, 155, 0, 0.2); }
         .folder-card .delete-btn { position: absolute; top: 8px; right: 8px; background: rgba(220, 38, 38, 0.9); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 12px; z-index: 10; transition: all 0.3s; display: none; align-items: center; justify-content: center; }
         .folder-card .delete-btn:hover { transform: scale(1.1); background: #ef4444; }
@@ -212,8 +279,29 @@
         .folder-card .info { padding: 12px 14px; background: #1a1a1a; }
         .folder-card .info h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f59b00; }
         .folder-card .info small { color: #555; font-size: 11px; }
-        .video-card .thumb { width: 100%; aspect-ratio: 16/9; background: #0a0a0a; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
-        .video-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; transition: 0.4s; background: #0a0a0a; }
+        .video-card .thumb { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            background: #0a0a0a; 
+            overflow: hidden; 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .video-card .thumb img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            display: block; 
+            transition: 0.4s; 
+            background: #0a0a0a;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.4s;
+        }
+        .video-card .thumb img.loaded {
+            opacity: 1;
+        }
         .video-card:hover .thumb img { transform: scale(1.02); }
         .video-card .thumb .play-icon { display: none; }
         .video-card .info { padding: 12px 14px; }
@@ -235,14 +323,105 @@
         .notification.success { border-color: #22c55e; }
         .notification.error { border-color: #ef4444; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .loading { text-align: center; padding: 60px 20px; color: #f59b00; }
-        .loading i { font-size: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @media (max-width: 600px) { body { padding: 12px; } .video-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; } .logo { font-size: 22px; } .header { flex-direction: column; align-items: flex-start; } .header-right { width: 100%; justify-content: space-between; } .admin-panel { padding: 16px; } .admin-tabs { flex-wrap: wrap; } .modal-box { padding: 24px; } .banner-card .banner-thumb { aspect-ratio: 16/6; } .banner-card .banner-info .banner-title { font-size: 15px; } }
-        @media (max-width: 400px) { .video-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; } .video-card .info { padding: 8px 10px; } .video-card .info h3 { font-size: 12px; } }
+        
+        /* LOADING OVERLAY - FULLSCREEN */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            transition: opacity 0.8s ease;
+        }
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-overlay .loading-logo {
+            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 48px;
+            color: #f59b00;
+        }
+        .loading-overlay .loading-logo small {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            letter-spacing: 6px;
+            color: #555;
+            font-weight: normal;
+            display: block;
+            margin-top: 4px;
+        }
+        .loading-overlay .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #1a1a1a;
+            border-top: 4px solid #f59b00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .loading-overlay .loading-text {
+            color: #555;
+            font-size: 14px;
+        }
+        .loading-overlay .loading-progress {
+            color: #f59b00;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 60px 20px;
+            color: #f59b00;
+        }
+        .loading-indicator i {
+            font-size: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 600px) { 
+            body { padding: 12px; } 
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; } 
+            .logo { font-size: 22px; } 
+            .header { flex-direction: column; align-items: flex-start; } 
+            .header-right { width: 100%; justify-content: space-between; } 
+            .admin-panel { padding: 16px; } 
+            .admin-tabs { flex-wrap: wrap; } 
+            .modal-box { padding: 24px; } 
+            .banner-card .banner-thumb { aspect-ratio: 16/6; } 
+            .banner-card .banner-info .banner-title { font-size: 15px; }
+            .loading-overlay .loading-logo { font-size: 32px; }
+        }
+        @media (max-width: 400px) { 
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; } 
+            .video-card .info { padding: 8px 10px; } 
+            .video-card .info h3 { font-size: 12px; } 
+        }
     </style>
 </head>
 <body>
+
+    <!-- FULLSCREEN LOADING OVERLAY -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-logo">
+            Vidoy
+            <small>S T R E A M</small>
+        </div>
+        <div class="spinner"></div>
+        <div class="loading-text">Memuat thumbnail...</div>
+        <div class="loading-progress" id="loadingProgress">0%</div>
+    </div>
 
     <!-- LOGIN MODAL -->
     <div class="modal-overlay" id="loginModal">
@@ -286,7 +465,7 @@
         <i class="fas fa-folder"></i> <span id="currentFolder">Root</span>
     </div>
 
-    <!-- ===== BANNER CARD (seperti video card, thumbnail besar, judul, keranjang beli) ===== -->
+    <!-- BANNER CARD -->
     <div class="banner-card" id="bannerCard">
         <div class="banner-thumb" id="bannerThumb">
             <img id="bannerThumbImg" src="" alt="Banner" style="display:none;">
@@ -306,7 +485,7 @@
         </div>
     </div>
 
-    <!-- ===== BANNER ADMIN EDITOR ===== -->
+    <!-- BANNER ADMIN EDITOR -->
     <div class="banner-admin-panel" id="bannerEditorPanel">
         <h3><i class="fas fa-edit"></i> Edit Banner</h3>
         <form id="bannerForm">
@@ -350,7 +529,6 @@
             <button class="admin-tab" onclick="switchTab('manage')"><i class="fas fa-list"></i> Kelola</button>
         </div>
 
-        <!-- Form Tambah Video -->
         <div class="admin-form active" id="formVideo">
             <h3 style="color: #f59b00; margin-bottom: 15px;">Tambah Video Baru</h3>
             <form id="addVideoForm">
@@ -378,7 +556,6 @@
             </form>
         </div>
 
-        <!-- Form Tambah Folder -->
         <div class="admin-form" id="formFolder">
             <h3 style="color: #f59b00; margin-bottom: 15px;">Tambah Folder Baru</h3>
             <form id="addFolderForm">
@@ -392,7 +569,6 @@
             </form>
         </div>
 
-        <!-- Manage -->
         <div class="admin-form" id="formManage">
             <h3 style="color: #f59b00; margin-bottom: 15px;">Kelola Konten</h3>
             <p style="color: #555; margin-bottom: 15px;">Hapus item dengan mengklik tombol <span style="color: #ef4444;">✕</span> pada kartu</p>
@@ -414,10 +590,6 @@
     </div>
 
     <!-- VIDEO GRID -->
-    <div id="loadingIndicator" class="loading" style="display:none;">
-        <i class="fas fa-spinner"></i><br><br>
-        Memuat data dari cloud...
-    </div>
     <div class="video-grid" id="videoGrid"></div>
 
     <div class="footer">Made with <i class="fas fa-heart"></i> by Vidoy Stream</div>
@@ -444,6 +616,45 @@
             }
         };
         let isLoading = false;
+        let imagesLoaded = 0;
+        let totalImages = 0;
+
+        // ==========================================================
+        // IMAGE LOADING TRACKER
+        // ==========================================================
+        function trackImageLoad(img) {
+            return new Promise((resolve) => {
+                if (img.complete && img.naturalWidth !== 0) {
+                    resolve();
+                } else {
+                    img.onload = () => resolve();
+                    img.onerror = () => resolve(); // tetap lanjut meskipun error
+                }
+            });
+        }
+
+        async function waitForAllImages() {
+            const images = document.querySelectorAll('img');
+            totalImages = images.length;
+            imagesLoaded = 0;
+            
+            if (totalImages === 0) {
+                document.getElementById('loadingProgress').textContent = '100%';
+                return;
+            }
+
+            const promises = [];
+            images.forEach(img => {
+                promises.push(trackImageLoad(img).then(() => {
+                    imagesLoaded++;
+                    const progress = Math.round((imagesLoaded / totalImages) * 100);
+                    document.getElementById('loadingProgress').textContent = progress + '%';
+                    img.classList.add('loaded');
+                }));
+            });
+
+            await Promise.all(promises);
+        }
 
         // ==========================================================
         // SUPABASE FUNCTIONS
@@ -451,7 +662,9 @@
         async function loadFromCloud() {
             try {
                 isLoading = true;
-                document.getElementById('loadingIndicator').style.display = 'block';
+                document.getElementById('loadingOverlay').classList.remove('hidden');
+                document.getElementById('loadingProgress').textContent = '0%';
+                
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${RECORD_ID}`, {
                     headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
                 });
@@ -477,9 +690,6 @@
                     } catch (e) {}
                 }
                 return false;
-            } finally {
-                isLoading = false;
-                document.getElementById('loadingIndicator').style.display = 'none';
             }
         }
 
@@ -526,10 +736,20 @@
         async function syncData() {
             if (!isAdminLoggedIn) { showNotification('❌ Anda harus login sebagai admin!', 'error'); return; }
             showNotification('🔄 Sinkronisasi data...', 'success');
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingProgress').textContent = '0%';
             await loadFromCloud();
             renderCurrentView();
             updateFolderSelect();
             updateBannerDisplay();
+            
+            // Tunggu semua gambar dimuat
+            await waitForAllImages();
+            
+            document.getElementById('videoGrid').classList.add('loaded');
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 500);
             showNotification('✅ Sinkronisasi selesai!', 'success');
         }
 
@@ -739,6 +959,9 @@
                     card.style.cursor = 'default';
                     card.onclick = null;
                 }
+                thumbImg.onload = function() {
+                    this.classList.add('loaded');
+                };
                 thumbImg.onerror = function() {
                     this.style.display = 'none';
                     placeholder.style.display = 'flex';
@@ -988,14 +1211,36 @@
         // START
         // ==========================================================
         async function init() {
+            // Tampilkan loading
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingProgress').textContent = '0%';
+            
+            // Load data dari cloud
             await loadFromCloud();
+            
+            // Render semua konten
             renderCurrentView();
             updateFolderSelect();
             updateBannerDisplay();
             document.querySelector('.banner-edit-btn').classList.remove('visible');
+            
+            // Tunggu semua thumbnail selesai dimuat
+            await waitForAllImages();
+            
+            // Tampilkan konten dengan animasi
+            document.getElementById('videoGrid').classList.add('loaded');
+            
+            // Sembunyikan loading overlay
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 500);
+            
             console.log('🎬 Vidoy Stream siap!');
             console.log('🔐 Password default: admin123');
+            console.log('📸 Total thumbnail dimuat:', totalImages);
         }
+
+        // Jalankan
         init();
     </script>
 </body>
